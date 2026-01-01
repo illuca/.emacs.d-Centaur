@@ -34,6 +34,22 @@
   (require 'init-const)
   (require 'init-custom))
 
+(defun my-typescript-like-mode-p ()
+  "Return non-nil when the current buffer is a TypeScript mode."
+  (derived-mode-p 'typescript-ts-mode 'tsx-ts-mode 'typescript-mode))
+
+(defun my-eglot-enable-inlay-hints ()
+  "Enable inlay hints for TypeScript buffers in Eglot."
+  (when (my-typescript-like-mode-p)
+    (when (fboundp 'eglot-inlay-hints-mode)
+      (eglot-inlay-hints-mode 1))))
+
+(defun my-lsp-enable-inlay-hints ()
+  "Enable inlay hints for TypeScript buffers in lsp-mode."
+  (when (my-typescript-like-mode-p)
+    (when (fboundp 'lsp-inlay-hints-mode)
+      (lsp-inlay-hints-mode 1))))
+
 (pcase centaur-lsp
   ('eglot
    (use-package eglot
@@ -46,7 +62,30 @@
             ((markdown-mode yaml-mode yaml-ts-mode) . eglot-ensure))
      :init (setq eglot-autoshutdown t
                  eglot-events-buffer-size 0
-                 eglot-send-changes-idle-time 0.5))
+                 eglot-send-changes-idle-time 0.5)
+     :config
+     (add-to-list 'eglot-workspace-configuration
+                  '(:typescript
+                    . (:inlayHints
+                       (:parameterNames (:enabled "all")
+                        :parameterTypes (:enabled t)
+                        :variableTypes (:enabled t)
+                        :propertyDeclarationTypes (:enabled t)
+                        :functionLikeReturnTypes (:enabled t)
+                        :enumMemberValues (:enabled t)))))
+     (add-to-list 'eglot-workspace-configuration
+                  '(:javascript
+                    . (:inlayHints
+                       (:parameterNames (:enabled "all")
+                        :parameterTypes (:enabled t)
+                        :variableTypes (:enabled t)
+                        :propertyDeclarationTypes (:enabled t)
+                        :functionLikeReturnTypes (:enabled t)
+                        :enumMemberValues (:enabled t)))))
+     (add-to-list 'eglot-server-programs
+                  '((typescript-ts-mode tsx-ts-mode typescript-mode)
+                    . ("typescript-language-server" "--stdio")))
+     (add-hook 'eglot-managed-mode-hook #'my-eglot-enable-inlay-hints))
 
    (use-package consult-eglot
      :after consult eglot
@@ -68,6 +107,7 @@
                              (lsp-deferred))))
             ((markdown-mode yaml-mode yaml-ts-mode) . lsp-deferred)
             (lsp-mode . (lambda ()
+                          (my-lsp-enable-inlay-hints)
                           ;; Integrate `which-key'
                           (lsp-enable-which-key-integration)
 

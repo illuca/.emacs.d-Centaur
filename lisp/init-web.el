@@ -90,10 +90,26 @@
   (use-package json-mode))
 
 ;; Typescript
-(unless (and (centaur-treesit-available-p)
-             (fboundp 'typescript-ts-mode))
+(if (and (centaur-treesit-available-p)
+         (fboundp 'typescript-ts-mode))
+    (progn
+      (use-package typescript-ts-mode
+        :ensure nil
+        :mode (("\\.ts\\'" . typescript-ts-mode)
+               ("\\.tsx\\'" . tsx-ts-mode))
+        :init
+        (setq typescript-ts-mode-indent-offset 2
+              tsx-ts-mode-indent-offset 2))
+      (add-to-list 'major-mode-remap-alist '(typescript-mode . typescript-ts-mode)))
   (use-package typescript-mode
-    :functions centaur-treesit-available-p))
+    :functions centaur-treesit-available-p
+    :init (setq typescript-indent-level 2)))
+
+(defun my-typescript-disable-dot-indent ()
+  "Avoid electric reindent on '.' in TypeScript buffers."
+  (setq-local electric-indent-chars (remq ?. electric-indent-chars)))
+(dolist (hook '(typescript-ts-mode-hook tsx-ts-mode-hook typescript-mode-hook))
+  (add-hook hook #'my-typescript-disable-dot-indent))
 
 ;; Major mode for CoffeeScript code
 (use-package coffee-mode
@@ -109,7 +125,8 @@
 
 ;; Adds node_modules/.bin directory to `exec_path'
 (use-package add-node-modules-path
-  :hook ((web-mode js-base-mode) . add-node-modules-path))
+  :hook ((web-mode js-base-mode typescript-mode typescript-ts-mode tsx-ts-mode)
+         . add-node-modules-path))
 
 (use-package haml-mode)
 (use-package php-mode)
