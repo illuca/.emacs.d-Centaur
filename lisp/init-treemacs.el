@@ -51,6 +51,7 @@
          ([mouse-1]   . treemacs-single-click-expand-action))
   :config
   (setq treemacs-collapse-dirs           (if treemacs-python-executable 3 0)
+        treemacs-display-in-side-window  nil
         treemacs-missing-project-action  'remove
         treemacs-user-mode-line-format   'none
         treemacs-sorting                 'alphabetic-asc
