@@ -116,6 +116,7 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
                                         ;(require 'init-chinese-character)
 (require 'init-edit)
 (require 'init-completion)
+(require 'init-minibuffer)
 (require 'init-snippet)
 
 (require 'init-bookmark)
