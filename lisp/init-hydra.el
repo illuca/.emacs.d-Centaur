@@ -51,7 +51,12 @@
               :poshandler posframe-poshandler-frame-center-near-bottom))))
   (hydra-set-posframe-appearance))
 
+(use-package use-package-hydra
+  :after hydra
+  :demand t)
+
 (use-package pretty-hydra
+  :demand t
   :functions icons-displayable-p
   :bind ("<f6>" . toggles-hydra/body)
   :hook (emacs-lisp-mode . (lambda ()
@@ -76,6 +81,7 @@
               " "))))
        (propertize title 'face face))))
 
+  :config
   ;; Global toggles
   (with-no-warnings
     (pretty-hydra-define toggles-hydra (:title (pretty-hydra-title "Toggles" 'faicon "nf-fa-toggle_on")
