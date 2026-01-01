@@ -267,7 +267,7 @@ Nil to use font supports ligatures."
 
 ;; Load `custom-file'
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-
+(setq tab-bar-show t)
 (provide 'init-custom)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
