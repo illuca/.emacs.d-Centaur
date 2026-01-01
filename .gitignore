@@ -1,3 +1,4 @@
+
 *.bak
 *.data
 *.db
@@ -88,3 +89,5 @@ workspace/
 .history
 .session
 .uptimes.el
+eaf/
+org/

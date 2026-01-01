@@ -37,16 +37,20 @@
 (use-package gptel
   :functions gptel-make-openai
   :custom
-  (gptel-model 'gpt-4o)
+  (gptel-model 'glm-4.7)
   ;; Put the apikey to `auth-sources'
   ;; Format: "machine {HOST} login {USER} password {APIKEY}"
   ;; The LLM host is used as HOST, and "apikey" as USER.
-  (gptel-backend (gptel-make-openai "Github Models"
-                   :host "models.inference.ai.azure.com"
-                   :endpoint "/chat/completions?api-version=2024-05-01-preview"
+  (gptel-backend (gptel-make-openai "glm-4.7"
+                   :host "open.bigmodel.cn"
+                   :endpoint "/api/paas/v4/chat/completions"
+
+                                        ;:host "models.inference.ai.azure.com"
+                                        ;:endpoint "/api/paas/v4/chat/completions"
                    :stream t
                    :key 'gptel-api-key
-                   :models '(gpt-4o))))
+                                        ;:models '(gpt-4o))))
+                   :models '(glm-4.7 glm-4.6 glm-4.5 glm-4.5-air glm-4-air glm-4-flash))))
 
 ;; Generate commit messages for magit
 (use-package gptel-magit
