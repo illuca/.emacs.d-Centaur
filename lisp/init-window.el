@@ -34,7 +34,10 @@
 (use-package windmove
   :ensure nil
   :hook (after-init . (lambda ()
-                        (windmove-default-keybindings 'super))))
+                        (global-set-key (kbd "C-c <left>") #'windmove-left)
+                        (global-set-key (kbd "C-c <right>") #'windmove-right)
+                        (global-set-key (kbd "C-c <up>") #'windmove-up)
+                        (global-set-key (kbd "C-c <down>") #'windmove-down))))
 
 ;; Restore old window configurations
 (use-package winner
