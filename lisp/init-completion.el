@@ -361,7 +361,13 @@ targets."
              completion-cycle-threshold completion-cycling)
          (consult-completion-in-region beg end table pred)))))
   (keymap-set corfu-map "M-m" #'corfu-move-to-minibuffer)
-  (add-to-list 'corfu-continue-commands #'corfu-move-to-minibuffer))
+  (add-to-list 'corfu-continue-commands #'corfu-move-to-minibuffer)
+
+  (defun my-corfu-auto-prefix-ts ()
+    "Show completion immediately after '.' in TypeScript buffers."
+    (setq-local corfu-auto-prefix 0))
+  (dolist (hook '(typescript-ts-mode-hook tsx-ts-mode-hook typescript-mode-hook))
+    (add-hook hook #'my-corfu-auto-prefix-ts)))
 
 (unless (or (display-graphic-p) (featurep 'tty-child-frames))
   (use-package corfu-terminal
