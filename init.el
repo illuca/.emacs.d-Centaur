@@ -131,6 +131,7 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-window)
 (require 'init-treemacs)
                                         ;(require 'init-neotree)
+(require 'init-tab-line)
 
 (require 'init-eshell)
 (require 'init-shell)
