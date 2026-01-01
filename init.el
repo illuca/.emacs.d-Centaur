@@ -113,6 +113,7 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-hydra)
 
 (require 'init-ui)
+                                        ;(require 'init-chinese-character)
 (require 'init-edit)
 (require 'init-completion)
 (require 'init-snippet)
