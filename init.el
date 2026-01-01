@@ -127,6 +127,7 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-ibuffer)
 (require 'init-kill-ring)
 (require 'init-workspace)
+(require 'init-sessions)
 (require 'init-window)
 (require 'init-treemacs)
 
