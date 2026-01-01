@@ -140,6 +140,7 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 
 (require 'init-markdown)
 (require 'init-org)
+(require 'init-cloudinary-simple)
 (require 'init-reader)
 
 (require 'init-dict)
