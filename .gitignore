@@ -85,3 +85,6 @@ tutorial/
 url/
 var/
 workspace/
+.history
+.session
+.uptimes.el
